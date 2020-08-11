@@ -15,6 +15,7 @@ const TodoApp = () => {
     { id: 3, task: "Wash House", completed: false },
   ];
   const [todos, setTodos] = useState(intialTodos);
+
   const addTodo = (newTodo) => {
     setTodos([...todos, { id: uuidv4(), task: newTodo, completed: false }]);
   };
@@ -25,6 +26,12 @@ const TodoApp = () => {
   const toggleTodo = (todoId) => {
     const updatedTodos = todos.map((todo) =>
       todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
+    );
+    setTodos(updatedTodos);
+  };
+  const editTodo = (todoId, newTask) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === todoId ? { ...todo, task: newTask } : todo
     );
     setTodos(updatedTodos);
   };
@@ -40,7 +47,7 @@ const TodoApp = () => {
     >
       <Appbar color="secondary" position="static" style={{ height: "64px" }}>
         <Toolbar>
-          <Typography color="inherit">TODO LIST WITH HOOKS</Typography>
+          <Typography color="inherit">Grocery List HOOKS</Typography>
         </Toolbar>
       </Appbar>
       <Grid container justify="center" style={{ marginTop: "2rem" }}>
@@ -50,6 +57,7 @@ const TodoApp = () => {
             todos={todos}
             removeTodo={removeTodo}
             toggleTodo={toggleTodo}
+            editTodo={editTodo}
           />
         </Grid>
       </Grid>
