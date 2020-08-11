@@ -1,19 +1,12 @@
 import React from "react";
 import useInputState from "../CustomHooks/UseInputState";
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 export default function EditTodo({ id, task, editTodo, toggle }) {
   const [value, handleChange, reset] = useInputState(task);
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        editTodo(id, value);
-        reset();
-        toggle();
-      }}
-      style={{ marginLeft: "1rem", width: "100%" }}
-    >
+    <>
       <TextField
         margin="normal"
         value={value}
@@ -21,6 +14,19 @@ export default function EditTodo({ id, task, editTodo, toggle }) {
         fullWidth
         autoFocus
       />
-    </form>
+      <Button
+        variant="contained"
+        color="secondary"
+        style={{ margin: "1rem" }}
+        onClick={(e) => {
+          e.preventDefault();
+          editTodo(id, value);
+          reset();
+          toggle();
+        }}
+      >
+        Save
+      </Button>
+    </>
   );
 }

@@ -30,7 +30,7 @@ const TodoApp = () => {
     >
       <Appbar color="secondary" position="static" style={{ height: "64px" }}>
         <Toolbar>
-          <Typography color="inherit">Grocery List HOOKS</Typography>
+          <Typography color="inherit">LIST WITH HOOKS</Typography>
         </Toolbar>
       </Appbar>
       <Grid container justify="center" style={{ marginTop: "2rem" }}>
