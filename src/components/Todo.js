@@ -1,5 +1,5 @@
 import React from "react";
-import useToggle from "./CustomHooks/useToggle";
+import useToggle from "../CustomHooks/useToggle";
 import EditTodo from "./EditTodo";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -19,7 +19,7 @@ export default function Todo({
 }) {
   const [isEditing, toggle] = useToggle();
   return (
-    <ListItem>
+    <ListItem style={{ height: "64px" }}>
       {isEditing ? (
         <EditTodo editTodo={editTodo} id={id} task={task} toggle={toggle} />
       ) : (
