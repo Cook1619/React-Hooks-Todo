@@ -8,42 +8,43 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import { Consumer } from "../Context";
 
-export default function Todo({
-  id,
-  task,
-  completed,
-  removeTodo,
-  toggleTodo,
-  editTodo,
-}) {
+export default function Todo({ id, task, completed }) {
   const [isEditing, toggle] = useToggle();
   return (
-    <ListItem style={{ height: "64px" }}>
-      {isEditing ? (
-        <EditTodo editTodo={editTodo} id={id} task={task} toggle={toggle} />
-      ) : (
-        <>
-          <Checkbox
-            checked={completed}
-            tabIndex={-1}
-            onClick={() => toggleTodo(id)}
-          />
-          <ListItemText
-            style={{ textDecoration: completed ? "line-through" : "none" }}
-          >
-            {task}
-          </ListItemText>
-          <ListItemSecondaryAction>
-            <IconButton aria-label="Delete" onClick={() => removeTodo(id)}>
-              <DeleteIcon />
-            </IconButton>
-            <IconButton aria-label="Edit" onClick={toggle}>
-              <EditIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </>
+    <Consumer>
+      {({ actions }) => (
+        <ListItem style={{ height: "64px" }}>
+          {isEditing ? (
+            <EditTodo id={id} task={task} toggle={toggle} />
+          ) : (
+            <>
+              <Checkbox
+                checked={completed}
+                tabIndex={-1}
+                onClick={() => actions.toggleTodo(id)}
+              />
+              <ListItemText
+                style={{ textDecoration: completed ? "line-through" : "none" }}
+              >
+                {task}
+              </ListItemText>
+              <ListItemSecondaryAction>
+                <IconButton
+                  aria-label="Delete"
+                  onClick={() => actions.removeTodo(id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="Edit" onClick={toggle}>
+                  <EditIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </>
+          )}
+        </ListItem>
       )}
-    </ListItem>
+    </Consumer>
   );
 }
