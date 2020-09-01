@@ -1,8 +1,9 @@
 import useTodoState from "./UseTodoState";
 import { useState } from "react";
+import { useState } from "react";
+import useTodoState from "./UseTodoState";
 
 jest.mock("react");
-const { addTodo, editTodo, removeTodo, toggleTodo } = useTodoState();
 
 describe("useTodoState", () => {
   test("makes sure addtodo works", () => {
@@ -11,6 +12,7 @@ describe("useTodoState", () => {
     ];
     const setTodos = jest.fn();
     useState.mockReturnValue([todos, setTodos]);
+    const { addTodo } = useTodoState();
     addTodo();
     expect(setTodos).toHaveBeenCalled();
   });
