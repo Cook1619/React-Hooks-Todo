@@ -15,10 +15,10 @@ export default function TodoList() {
             <Paper>
               <List>
                 {todos.map((todo, index) => (
-                  <React.Fragment key={todo.id}>
+                  <React.Fragment key={todo.todo_id}>
                     <Todo
-                      task={todo.task}
-                      id={todo.id}
+                      task={todo.description}
+                      id={todo.todo_id}
                       completed={todo.completed}
                     />
                     {index < todos.length - 1 && <Divider />}

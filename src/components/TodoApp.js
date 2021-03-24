@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import useTodoState from "../CustomHooks/UseTodoState";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
@@ -10,14 +10,7 @@ import TodoForm from "./TodoForm";
 import { Provider } from "../Context";
 
 const TodoApp = () => {
-  const initialTodos = JSON.parse(window.localStorage.getItem("todos") || "[]");
-  const { todos, addTodo, removeTodo, toggleTodo, editTodo } = useTodoState(
-    initialTodos
-  );
-
-  useEffect(() => {
-    window.localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+  const { todos, addTodo, removeTodo, toggleTodo, editTodo } = useTodoState([]);
 
   return (
     <Provider

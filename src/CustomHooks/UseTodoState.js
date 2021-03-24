@@ -1,8 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 import { v4 as uuidv4 } from "uuid";
+
 
 export default (initialTodos) => {
   const [todos, setTodos] = useState(initialTodos);
+  const getTodos = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/todos");
+      setTodos(response.data);
+  
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+  useEffect(() => {
+    getTodos();
+  }, []);
   return {
     todos,
     addTodo: (newTodoText) => {
