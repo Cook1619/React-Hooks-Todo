@@ -8,6 +8,7 @@ export default (initialTodos) => {
   const getTodos = async () => {
     try {
       const response = await axios.get("http://localhost:5000/todos");
+      console.log(response.data);
       setTodos(response.data);
   
     } catch (err) {
@@ -19,17 +20,25 @@ export default (initialTodos) => {
   }, []);
   return {
     todos,
-    addTodo: (newTodoText) => {
-      setTodos([
-        ...todos,
-        { id: uuidv4(), task: newTodoText, completed: false },
-      ]);
+    addTodo: async (newTodoText) => {
+      try {
+        const response = await axios.post("http://localhost:5000/todos", {description: newTodoText, completed: false});
+        setTodos([
+          ...todos,
+          response.data
+        ])
+      } catch (error) {
+        console.error(error.message)
+      }
     },
-    removeTodo: (todoId) => {
+    removeTodo: async (todoId) => {
       //filter out removed todo
-      const updatedTodos = todos.filter((todo) => todo.id !== todoId);
-      //call setTodos with new todos array
-      setTodos(updatedTodos);
+      try {
+        const response = await axios.delete(`http://localhost:5000/todos/${todoId}`);
+        setTodos(todos.filter(todo => todo.todo_id !== todoId));
+      } catch (error) {
+        console.error(error);
+      }
     },
     toggleTodo: (todoId) => {
       const updatedTodos = todos.map((todo) =>
@@ -37,11 +46,17 @@ export default (initialTodos) => {
       );
       setTodos(updatedTodos);
     },
-    editTodo: (todoId, newTask) => {
-      const updatedTodos = todos.map((todo) =>
-        todo.id === todoId ? { ...todo, task: newTask } : todo
+    editTodo: async (todoId, newTask) => {
+      try {
+        const response = await axios.put(`http://localhost:5000/todos/${todoId}`, {description: newTask})
+        const updatedTodos = todos.map((todo) =>
+        todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
       );
       setTodos(updatedTodos);
+      } catch (error) {
+        console.error(error);
+      }
+      
     },
   };
 };
