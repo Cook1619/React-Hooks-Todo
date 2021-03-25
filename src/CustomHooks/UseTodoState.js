@@ -49,10 +49,12 @@ export default (initialTodos) => {
     editTodo: async (todoId, newTask) => {
       try {
         const response = await axios.put(`http://localhost:5000/todos/${todoId}`, {description: newTask})
+        console.log('TODOS', todos);
+        console.log('new task')
         const updatedTodos = todos.map((todo) =>
-        todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
-      );
-      setTodos(updatedTodos);
+        todo.todo_id === todoId ? { todo_id: todoId, description: newTask, ...todo } : todo);
+        console.log('updated todos', updatedTodos);
+        setTodos(updatedTodos);
       } catch (error) {
         console.error(error);
       }
