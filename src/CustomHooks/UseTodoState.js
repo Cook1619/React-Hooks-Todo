@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import { v4 as uuidv4 } from "uuid";
+import { Unstable_TrapFocus } from "@material-ui/core";
 
 
 export default (initialTodos) => {
@@ -49,11 +50,8 @@ export default (initialTodos) => {
     editTodo: async (todoId, newTask) => {
       try {
         const response = await axios.put(`http://localhost:5000/todos/${todoId}`, {description: newTask})
-        console.log('TODOS', todos);
-        console.log('new task')
         const updatedTodos = todos.map((todo) =>
-        todo.todo_id === todoId ? { todo_id: todoId, description: newTask, ...todo } : todo);
-        console.log('updated todos', updatedTodos);
+        todo.todo_id === todoId ? {...todo, todo_id: todoId, description: newTask,  } : todo);
         setTodos(updatedTodos);
       } catch (error) {
         console.error(error);
