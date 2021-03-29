@@ -41,11 +41,18 @@ export default (initialTodos) => {
         console.error(error);
       }
     },
-    toggleTodo: (todoId) => {
-      const updatedTodos = todos.map((todo) =>
-        todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
+    toggleTodo: async (todoId, completed) => {
+      try {
+        const response = await axios.put(`http://localhost:5000/todos/completed/${todoId}`, {completed: !completed})
+        const updatedTodos = todos.map((todo) =>
+        todo.todo_id === todoId ? { ...todo, todo_id: todoId, completed: !todo.completed  } : todo
       );
       setTodos(updatedTodos);
+      } catch (error) {
+        console.error(error);
+      }
+      
+      
     },
     editTodo: async (todoId, newTask) => {
       try {

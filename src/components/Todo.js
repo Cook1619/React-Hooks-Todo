@@ -23,7 +23,7 @@ export default function Todo({ id, task, completed }) {
               <Checkbox
                 checked={completed}
                 tabIndex={-1}
-                onClick={() => actions.toggleTodo(id)}
+                onClick={() => actions.toggleTodo(id, completed)}
               />
               <ListItemText
                 style={{ textDecoration: completed ? "line-through" : "none" }}
